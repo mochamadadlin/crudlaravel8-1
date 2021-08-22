@@ -1,28 +1,36 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
+@extends('layout.admin')
+@push('css')
+      <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>CRUD LARAVEL 8</title>
-</head>
+@endpush
+@section('content')
 
-<body>
-    <h1 class="text-center mb-4">Data Pegawai</h1>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard v2</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard v2</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
 
-    <div class="container">
+    <div class="container m-5 ">
         <a href="/tambahpegawai" class="btn btn-success">Tambah +</a>
-
-
+        {{-- {{ Session::get('halaman_url') }} --}}
         <div class="row g-3 align-items-center mt-2">
             <div class="col-auto">
                 <form action="/pegawai" method="GET">
@@ -74,7 +82,7 @@
 
 
         </div>
-        <div class="row">
+        <div class="row m-5">
             {{-- @if ($message = Session::get('success'))
             <div class="alert alert-success" role="alert">
                 {{ $message }}
@@ -88,6 +96,8 @@
                         <th scope="col">Foto</th>
                         <th scope="col">Jenis Kelamin</th>
                         <th scope="col">No telpon</th>
+                        <th scope="col">Tanggal Lahir</th>
+                        <th scope="col">Agama</th>
                         <th scope="col">Dibuat</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -105,6 +115,8 @@
                         </td>
                         <td>{{ $row->jeniskelamin }}</td>
                         <td>0{{ $row->notelpon }}</td>
+                        <td>{{ $row->tanggal_lahir }}</td>
+                        <td>{{ $row->religions->nama }}</td>
                         <td>{{ $row->created_at->format('D M Y') }}</td>
                         <td>
                             <a href="/tampilkandata/{{ $row->id }}" class="btn btn-info">Edit</a>
@@ -121,12 +133,14 @@
         </div>
     </div>
 
+</div>
 
+ 
+@endsection
 
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+@push('scripts')
+    
+ <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
@@ -174,5 +188,4 @@
     @endif
 
 </script>
-
-</html>
+@endpush

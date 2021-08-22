@@ -1,22 +1,13 @@
-<!doctype html>
-<html lang="en">
+@extends('layout.admin')
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-    <title>CRUD LARAVEL 8</title>
-</head>
+@section('content')
 
 <body>
-    <h1 class="text-center mb-4">Tambah Data Pegawai</h1>
+<br>
+<br>
+    <h1 class="text-center mb-5 mt-5">Tambah Data Pegawai</h1>
 
-    <div class="container">
+    <div class="container mb-5">
 
         <div class="row justify-content-center">
             <div class="col-8">
@@ -28,6 +19,30 @@
                                 <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
                                 <input type="text" name="nama" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp">
+                                    @error('nama')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                                <input type="date" name="tanggal_lahir" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                                    @error('tanggal_lahir')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Agama</label>
+                                <select class="form-select" name="id_religions" aria-label="Default select example">
+                                    <option selected>Pilih Agama</option>
+
+                                    @foreach ($dataagama as $data)
+                                        <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                    @endforeach
+                                    
+                                   
+
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
@@ -42,12 +57,16 @@
                                 <label for="exampleInputEmail1" class="form-label">No Telpon</label>
                                 <input type="number" name="notelpon" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp">
+                                    @error('notelpon')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Masukkan Foto</label>
                                 <input type="file" name="foto" class="form-control" >
                             </div>
+
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -73,4 +92,4 @@
     -->
 </body>
 
-</html>
+@endsection
