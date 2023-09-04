@@ -62,3 +62,5 @@ Route::get('/tambahagama',[ReligionController::class, 'create'])->name('tambahag
 
 Route::post('/insertdatareligion',[ReligionController::class, 'store'])->name('insertdatareligion');
 
+Route::resource('/user', UserController::class);
+

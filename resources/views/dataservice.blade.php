@@ -1,35 +1,39 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
+@extends('layout.admin')
+@push('css')
+      <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>CRUD LARAVEL 8</title>
-</head>
 
-<body>
-    <h1 class="text-center mb-4">Data Pegawai</h1>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">   
+@endpush
+@section('content')
 
-    <div class="container">
-        <a href="/tambahpegawai" class="btn btn-success">Tambah +</a>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Data Service</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <!-- <ol class="breadcrumb float-sm-right"> -->
+              <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
+              <!-- <li class="breadcrumb-item active">Dashboard v2</li> -->
+            <!-- </ol> -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
 
-
-        
-            <div class="col-auto">
-                <form action="/pegawai" method="GET">
-                    <input type="search" id="inputPassword6" name="search" class="form-control"
-                        aria-describedby="passwordHelpInline">
-                </form>
-            </div>
+    <div class="container m-5 ">
+        <!-- <a href="/tambahpegawai" class="btn btn-success">Tambah +</a> -->
+        {{-- {{ Session::get('halaman_url') }} --}}
+        <div class="row g-3 align-items-center mt-2">
 
             <div class="col-auto">
                 <a href="/exportpdf" class="btn btn-info">Export PDF</a>
@@ -45,13 +49,20 @@
                 </button>
             </div>
 
+            <div class="col-auto">
+                <form action="/pegawai" method="GET">
+                    <input type="search" placeholder="Search" id="inputPassword6" name="search" class="form-control"
+                        aria-describedby="passwordHelpInline">
+                </form>
+            </div>
+
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Import Data</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="/importexcel" method="POST" enctype="multipart/form-data">
@@ -70,25 +81,24 @@
                 </div>
             </div>
 
-
-
-
         </div>
-        <div class="row">
+        <div class="row m-5">
             {{-- @if ($message = Session::get('success'))
             <div class="alert alert-success" role="alert">
                 {{ $message }}
             </div>
             @endif --}}
-            <table class="table">
-                <thead>
+            <div class="table-responsive mt-3">
+            <table class="table table-striped table-bordered" id="myTable">
+            <thead class="table-light">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Foto</th>
-                        <th scope="col">Jenis Kelamin</th>
-                        <th scope="col">No telpon</th>
-                        <th scope="col">Dibuat</th>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Foto</th>
+                        <th>Jenis Kelamin</th>
+                        <th>No telpon</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Dibuat</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -105,8 +115,9 @@
                         </td>
                         <td>{{ $row->jeniskelamin }}</td>
                         <td>0{{ $row->notelpon }}</td>
+                        <td>{{ $row->tanggal_lahir }}</td>
                         <td>{{ $row->created_at->format('D M Y') }}</td>
-                        <td>
+                         <td> 
                             <a href="/tampilkandata/{{ $row->id }}" class="btn btn-info">Edit</a>
                             <a href="#" class="btn btn-danger delete" data-id="{{ $row->id }}"
                                 data-nama="{{ $row->nama }}">Delete</a>
@@ -120,13 +131,15 @@
             {{ $data->links() }}
         </div>
     </div>
+    </div>
+</div>
 
+ 
+@endsection
 
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+@push('scripts')
+    
+ <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
@@ -174,5 +187,4 @@
     @endif
 
 </script>
-
-</html>
+@endpush
